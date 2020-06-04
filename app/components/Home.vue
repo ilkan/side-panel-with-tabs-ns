@@ -5,7 +5,7 @@
             Use the NavigationButton as a side-drawer button in Android
             because ActionItems are shown on the right side of the ActionBar
             -->
-            <NavigationButton ios:visibility="collapsed" icon="res://menu" @tap="onDrawerButtonTap"></NavigationButton>
+            <NavigationButton ios:visibility="collapsed" icon="res://menu" @tap="onHomeButtonTap"></NavigationButton>
             <!-- 
             Use the ActionItem for IOS with position set to left. Using the
             NavigationButton as a side-drawer button in iOS is not possible,
@@ -14,7 +14,7 @@
             <ActionItem icon="res://menu" 
                 android:visibility="collapsed" 
                 @tap="onDrawerButtonTap"
-                ios.position="left">
+                ios.position="right">
             </ActionItem>
             <Label class="action-bar-title" text="Home"></Label>
         </ActionBar>
@@ -36,7 +36,7 @@
         </TabStrip>
 
         <TabContentItem>
-            <Frame>
+            <Frame id="itemContent">
                 <Items />
             </Frame>
         </TabContentItem>
@@ -84,7 +84,23 @@ import Questions from "../views/Questions"
         },
         methods: {
             onDrawerButtonTap() {
+                
                 utils.showDrawer();
+            },
+            onHomeButtonTap () {           
+            console.log('item tapped')
+            this.$navigateTo(Items, {
+                  frame: "itemContent",
+                   clearHistory: false,
+                props: { 
+                    
+                    animated: true,
+                    transition: {
+                        name: "slide",
+                        duration: 200,
+                        curve: "ease"
+                    }}});
+                    utils.showDrawer();
             }
         }
     };
